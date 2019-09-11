@@ -97,10 +97,10 @@ class user_listener(StreamListener):
 
                 # NGワードを検知した場合は弾いて好感度下げ
                 if YuChan.ngWordHook(txt):
-                    print('変なことを言ってはいけませんっ！！(*`ω´*): @{0}'.format(notification['account']['acct']))
+                    print('変なこと言っちゃダメ～！！(*`ω´*): @{0}'.format(notification['account']['acct']))
                     memory.update('fav_rate', -5, notification['account']['id'])
                     time.sleep(0.5)
-                    mastodon.status_post('@{}\n変なこと言っちゃいけませんっ！！(*`ω´*)'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                    mastodon.status_post('@{}\n変なこと言っちゃダメ～！！(*`ω´*)'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                     YuChan.unfollow_attempt(notification['account']['id'])
                     return
 
@@ -128,16 +128,16 @@ class user_listener(StreamListener):
                             if int(reqMem[2]) >= int(config['follow']['condition_rate']): # 設定で決めた好感度レート以上だったら合格
                                 print('フォローっ！：@{}'.format(notification['account']['acct']))
                                 mastodon.account_follow(notification['account']['id'])
-                                mastodon.status_post('@{}\nフォローしましたっ！これからもよろしくねっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                                mastodon.status_post('@{}\nフォローしだよっ！これからもよろしくねっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                             else: # 不合格の場合はレスポンスして終了
                                 print('もうちょっと仲良くなってからっ！：@{}'.format(notification['account']['acct']))
-                                mastodon.status_post('@{}\nもうちょっと仲良くなってからですっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                                mastodon.status_post('@{}\nもうちょっと仲良くなってからっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                         else:
                             print('先にフォローしてっ！:@{}'.format(notification['account']['acct']))
-                            mastodon.status_post('@{}\nレイちゃんをフォローしてくれたら考えますっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                            mastodon.status_post('@{}\n私をフォローしてくれたら考えるねっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                     else: # フォローしている場合は省く
                         print('フォロー済みっ！：@{}'.format(notification['account']['acct']))
-                        mastodon.status_post('@{}\nもうフォローしてますっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                        mastodon.status_post('@{}\nもうフォローしてるよっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                 
                 # 占いのリクエストがされたとき
                 elif fortune:
@@ -176,12 +176,12 @@ class user_listener(StreamListener):
                     reqMem = memory.select('fav_rate', notification['account']['id'])[0]
                     if int(reqMem[2]) >= int(config['follow']['condition_rate']):
                         print('❤：@{}'.format(notification['account']['acct']))
-                        mastodon.status_post('@{}\nレイちゃんも好きですっ！❤'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                        mastodon.status_post('@{}\nレイちゃんも好きっ！❤'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                     elif int(reqMem[2]) < 0:
                         print('...: @{}'.format(notification['account']['acct']))
                     else:
                         print('//：@{}'.format(notification['account']['acct']))
-                        mastodon.status_post('@{}\nは、恥ずかしいですっ・・・//'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                        mastodon.status_post('@{}\nは、恥ずかしいよっ・・・//'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
             
             elif notifyType == 'favourite':
                 # ふぁぼられ

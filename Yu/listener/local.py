@@ -57,13 +57,13 @@ class local_listener(StreamListener):
                     print('新規さん！: @{0}'.format(status['account']['acct']))
                     mastodon.status_reblog(status['id'])
                     time.sleep(0.5)
-                    mastodon.toot('新規さんっ！はじめましてっ！琴平レイって言いますっ！\nよろしくねっ！\n\n:@{0}: @{0}'.format(status['account']['acct']))
+                    mastodon.toot('新規さんっ！はじめましてっ！琴平レイって言うよっ！\nよろしくねっ！\n\n:@{0}: @{0}'.format(status['account']['acct']))
             else:
                 newUser = False
 
             # NGワードを検知した場合は弾いて好感度下げ
             if YuChan.ngWordHook(txt):
-                print('変なことを言ってはいけませんっ！！(*`ω´*): @{0}'.format(status['account']['acct']))
+                print('変なことを言っちゃダメ～！！(*`ω´*): @{0}'.format(status['account']['acct']))
                 memory.update('fav_rate', -5, status['account']['id'])
                 YuChan.unfollow_attempt(status['account']['id'])
                 return
@@ -120,7 +120,7 @@ class local_listener(StreamListener):
                     # NGワードを検知した場合は弾いて好感度下げ
                     for voteSection in voteOptions:
                         if YuChan.ngWordHook(voteSection['title']):
-                            print('変なことを言ってはいけませんっ！！(*`ω´*): @{0}'.format(status['account']['acct']))
+                            print('変なことを言っちゃダメ～！！！！(*`ω´*): @{0}'.format(status['account']['acct']))
                             memory.update('fav_rate', -5, status['account']['id'])
                             del memory
                             return
@@ -130,7 +130,7 @@ class local_listener(StreamListener):
                     mastodon.poll_vote(status['poll']['id'], voteChoose)
                     # 投票したものをトゥートする
                     print('投票っ！：@{0} => {1}'.format(status['account']['acct'], status['poll']['options'][voteChoose]['title']))
-                    mastodon.status_post('レイちゃんは「{0}」がいいと思いますっ！\n\n{1}'.format(status['poll']['options'][voteChoose]['title'], status['url']))
+                    mastodon.status_post('レイは「{0}」がいいと思うっ！\n\n{1}'.format(status['poll']['options'][voteChoose]['title'], status['url']))
 
             elif otherNick:
                 # 他人のニックネームの設定
@@ -142,7 +142,7 @@ class local_listener(StreamListener):
 
             elif iBack:
                 # おかえりとか言ったら実行
-                if YuChan.msg_hook('wel_back', 600, ":@{0}: {1}、おかえりなさいませっ！".format(status['account']['acct'], name), status, memory):
+                if YuChan.msg_hook('wel_back', 600, ":@{0}: {1}、おかえりなさいっ！".format(status['account']['acct'], name), status, memory):
                     print('おかえりっ！：@{0} < {1}'.format(status['account']['acct'], txt))
 
             elif goodNight:
@@ -152,7 +152,7 @@ class local_listener(StreamListener):
 
             elif seeYou:
                 # いってらっしゃいなのですっ！
-                if YuChan.msg_hook('see_you', 600, ":@{0}: {1}、いってらっしゃいっ！🚪".format(status['account']['acct'], name), status, memory):
+                if YuChan.msg_hook('see_you', 600, ":@{0}: {1}、いってらっしゃ～いっ！🚪".format(status['account']['acct'], name), status, memory):
                     print('いってらっしゃいっ！:@{0} < {1}'.format(status['account']['acct'], txt))                
 
             elif passage:
@@ -172,8 +172,8 @@ class local_listener(StreamListener):
 
             elif notNicoFri:
                 # ニコフレじゃないよっ！
-                if YuChan.msg_hook('not_nikofure', 10800, "ここはニコフレじゃないですっ！！レイ丼ですっ！(*`ω´*)", status, memory):
-                    print('レイ丼ですっ！：@{0} < {1}'.format(status['account']['acct'], txt))
+                if YuChan.msg_hook('not_nikofure', 10800, "ここはニコフレじゃないよっ！！レイ丼だよっ！(*`ω´*)", status, memory):
+                    print('レイ丼だよっ！：@{0} < {1}'.format(status['account']['acct'], txt))
 
             elif sad:
                 # よしよしっ
@@ -182,8 +182,8 @@ class local_listener(StreamListener):
 
             elif noNow:
                 # いまのなしは封印ですっ！
-                if YuChan.msg_hook('no_now', 180, "いまのなしは封印ですっ！！(*`ω´*)", status, memory):
-                    print('いまのなしは封印ですっ！：@{0} < {1}'.format(status['account']['acct'], txt))
+                if YuChan.msg_hook('no_now', 180, "いまのなしは封印だよっ！！(*`ω´*)", status, memory):
+                    print('いまのなしは封印だよっ！：@{0} < {1}'.format(status['account']['acct'], txt))
 
             elif writeDict:
                 # 辞書登録っ
@@ -198,7 +198,7 @@ class local_listener(StreamListener):
                 print('メモっ！：@{0} < {1}'.format(status['account']['acct'], txt))
                 res = YuChan.write_memo(status['account']['acct'], memoBody, status['id'], memory)
                 if res == False:
-                    mastodon.status_post('@{}\n長いのでまとめられそうにありませんっ・・・'.format(status['account']['acct']), in_reply_to_id=status['id'])
+                    mastodon.status_post('@{}\n長い過ぎてまとめられそうにないよ・・・'.format(status['account']['acct']), in_reply_to_id=status['id'])
 
             # 最終更新を変更
             now = datetime.datetime.now(timezone('Asia/Tokyo'))
@@ -213,8 +213,8 @@ class local_listener(StreamListener):
                 if shouldGreet:
                     time.sleep(0.5)
                     if now.hour < 12 and now.hour >= 5:
-                        print("おはようございますっ！：@{0} < {1}".format(status['account']['acct'], txt))
-                        mastodon.toot(""":@{1}: {0}、おはようございますっ！🌄""".format(name, status['account']['acct']))
+                        print("おはようっ！：@{0} < {1}".format(status['account']['acct'], txt))
+                        mastodon.toot(""":@{1}: {0}、おはようっ！🌄""".format(name, status['account']['acct']))
                     elif now.hour >= 12 and now.hour < 17:
                         print("こんにちはっ！：@{0} < {1}".format(status['account']['acct'], txt))
                         mastodon.toot(""":@{1}: {0}、こんにちはっ！☀""".format(name, status['account']['acct']))
@@ -240,7 +240,7 @@ class local_listener(StreamListener):
         try:
             # メモのトゥートが削除されたらデータベースから削除する
             if YuChan.cancel_memo(status_id):
-                print(f"メモを削除っ！: {str(status_id)}")
+                print(f"メモ削除っ！: {str(status_id)}")
         except Exception as e: # 上と同じ
             raise e
         finally:
