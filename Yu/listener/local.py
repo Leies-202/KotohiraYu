@@ -41,8 +41,8 @@ class local_listener(StreamListener):
             # データベース初期化
             memory = KotohiraMemory(showLog=config['log'].getboolean('enable'))
 
-            # ユウちゃんが知ってるユーザーか調べる
-            # 知らない場合はユウちゃんは記憶しますっ！
+            # レイちゃんが知ってるユーザーか調べる
+            # 知らない場合はレイちゃんは記憶しますっ！
             isknown = memory.select('known_users', status['account']['id'])
             if len(isknown) == 0:
                 now = datetime.datetime.now(timezone('Asia/Tokyo'))
@@ -57,7 +57,7 @@ class local_listener(StreamListener):
                     print('新規さん！: @{0}'.format(status['account']['acct']))
                     mastodon.status_reblog(status['id'])
                     time.sleep(0.5)
-                    mastodon.toot('新規さんっ！はじめましてっ！琴平ユウって言いますっ！\nよろしくねっ！\n\n:@{0}: @{0}'.format(status['account']['acct']))
+                    mastodon.toot('新規さんっ！はじめましてっ！琴平レイって言いますっ！\nよろしくねっ！\n\n:@{0}: @{0}'.format(status['account']['acct']))
             else:
                 newUser = False
 
@@ -90,11 +90,11 @@ class local_listener(StreamListener):
                 name += "さん"
 
             # 正規表現チェック
-            calledYuChan = re.search(r'(琴平|ことひら|コトヒラ|ｺﾄﾋﾗ|ゆう|ゆぅ|ユウ|ユゥ|ﾕｳ|ﾕｩ|:@' + config['user']['me'] + ':)', txt)
+            calledYuChan = re.search(r'(琴平|ことひら|コトヒラ|ｺﾄﾋﾗ|れい|れぃ|レイ|レィ|ﾚｲ|ﾚｨ|:@' + config['user']['me'] + ':)', txt)
             otherNick = re.search(r'^:@([a-zA-Z0-9_]+):\sの(あだ名|あだな|ニックネーム)[:：は]\s?(.+)', txt)
             nick = re.search(r'^(あだ(名|な)|ニックネーム)[:：は]\s?(.+)', txt)
             iBack = re.search(r'(帰宅|ただいま|帰った|帰還)(?!.*(する|します|しちゃう|しよう|中|ちゅう|してる))', txt)
-            goodNight = re.search(r'寝(ます|る|マス)([よかぞね]?|[...。うぅー~!・]+)$|^寝(ます|る|よ)[...。うぅー~!・]*$|寝(ます|る|マス)(.*)[ぽお]や[ユすしー]|(ユウ|ﾕｳ|ゆう|ことひら|コトヒラ|ｺﾄﾋﾗ)(ちゃん)?(.*)[ぽお]や[ユすしー]', txt)
+            goodNight = re.search(r'寝(ます|る|マス)([よかぞね]?|[...。うぅー~!・]+)$|^寝(ます|る|よ)[...。うぅー~!・]*$|寝(ます|る|マス)(.*)[ぽお]や[ユすしー]|(レイ|ﾕｳ|れい|ことひら|コトヒラ|ｺﾄﾋﾗ)(ちゃん)?(.*)[ぽお]や[ユすしー]', txt)
             seeYou = re.search(r'((行|い)って(きます|くる)|ノシ|ﾉｼ)', txt)
             passage = re.search(r'(通過|つうか|ツウカ)(?!.*(おめ|した))', txt)
             sinkiSagi = re.search(r'(新規|しんき)(です|だよ|なのじゃ)', txt)
@@ -105,7 +105,7 @@ class local_listener(StreamListener):
             writeDict = re.search(r'^:@[a-zA-Z0-9_]+:(さん|くん|君|殿|どの|ちゃん)?はこんな人[:：]', txt)
             writeMemo = re.search(r'^(メモ|めも|[Mm][Ee][Mm][Oo])[:：](.+)', txt)
             
-            # ユウちゃん etc... とか呼ばれたらふぁぼる
+            # レイちゃん etc... とか呼ばれたらふぁぼる
             if calledYuChan:
                 print('呼ばれたっ！：@{0} < {1}'.format(status['account']['acct'], txt))
                 mastodon.status_favourite(status['id'])
@@ -130,7 +130,7 @@ class local_listener(StreamListener):
                     mastodon.poll_vote(status['poll']['id'], voteChoose)
                     # 投票したものをトゥートする
                     print('投票っ！：@{0} => {1}'.format(status['account']['acct'], status['poll']['options'][voteChoose]['title']))
-                    mastodon.status_post('ユウちゃんは「{0}」がいいと思いますっ！\n\n{1}'.format(status['poll']['options'][voteChoose]['title'], status['url']))
+                    mastodon.status_post('レイちゃんは「{0}」がいいと思いますっ！\n\n{1}'.format(status['poll']['options'][voteChoose]['title'], status['url']))
 
             elif otherNick:
                 # 他人のニックネームの設定
@@ -172,8 +172,8 @@ class local_listener(StreamListener):
 
             elif notNicoFri:
                 # ニコフレじゃないよっ！
-                if YuChan.msg_hook('not_nikofure', 10800, "ここはニコフレじゃないですっ！！ベスフレですっ！(*`ω´*)", status, memory):
-                    print('ベスフレですっ！：@{0} < {1}'.format(status['account']['acct'], txt))
+                if YuChan.msg_hook('not_nikofure', 10800, "ここはニコフレじゃないですっ！！レイ丼ですっ！(*`ω´*)", status, memory):
+                    print('レイ丼ですっ！：@{0} < {1}'.format(status['account']['acct'], txt))
 
             elif sad:
                 # よしよしっ

@@ -45,9 +45,9 @@ class user_listener(StreamListener):
             # データベース初期化
             memory = KotohiraMemory(showLog=config['log'].getboolean('enable'))
 
-            calledYuChan = re.search(r'(琴平|ことひら|コトヒラ|ｺﾄﾋﾗ|ゆう|ゆぅ|ユウ|ユゥ|ﾕｳ|ﾕｩ|:@' + config['user']['me'] + ':)', txt)
+            calledYuChan = re.search(r'(琴平|ことひら|コトヒラ|ｺﾄﾋﾗ|れい|れぃ|レイ|レィ|ﾚｲ|ﾚｨ|:@' + config['user']['me'] + ':)', txt)
 
-            # ユウちゃん etc... とか呼ばれたらふぁぼる
+            # レイちゃん etc... とか呼ばれたらふぁぼる
             if calledYuChan:
                 print('呼ばれたっ！：@{0} < {1}'.format(status['account']['acct'], txt))
                 mastodon.status_favourite(status['id'])
@@ -134,7 +134,7 @@ class user_listener(StreamListener):
                                 mastodon.status_post('@{}\nもうちょっと仲良くなってからですっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                         else:
                             print('先にフォローしてっ！:@{}'.format(notification['account']['acct']))
-                            mastodon.status_post('@{}\nユウちゃんをフォローしてくれたら考えますっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                            mastodon.status_post('@{}\nレイちゃんをフォローしてくれたら考えますっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                     else: # フォローしている場合は省く
                         print('フォロー済みっ！：@{}'.format(notification['account']['acct']))
                         mastodon.status_post('@{}\nもうフォローしてますっ！'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
@@ -161,7 +161,7 @@ class user_listener(StreamListener):
                 elif nick:
                     YuChan.set_nickname(txt, notification['status']['id'], notification['account']['id'], notification['account']['acct'], notification['status']['visibility'], memory)
 
-                # ユウちゃんとじゃんけんっ！
+                # レイちゃんとじゃんけんっ！
                 elif rspOtt:
                     YuChan.rsp(txt, notification)
                     # 更に４つ加算
@@ -176,7 +176,7 @@ class user_listener(StreamListener):
                     reqMem = memory.select('fav_rate', notification['account']['id'])[0]
                     if int(reqMem[2]) >= int(config['follow']['condition_rate']):
                         print('❤：@{}'.format(notification['account']['acct']))
-                        mastodon.status_post('@{}\nユウちゃんも好きですっ！❤'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
+                        mastodon.status_post('@{}\nレイちゃんも好きですっ！❤'.format(notification['account']['acct']), in_reply_to_id=notification['status']['id'], visibility=notification['status']['visibility'])
                     elif int(reqMem[2]) < 0:
                         print('...: @{}'.format(notification['account']['acct']))
                     else:

@@ -31,10 +31,10 @@ class KotohiraUtil:
             f.write('--- PANIC! {} ---\n'.format(nowFormat))
             traceback.print_exc(file=f)
             f.write('\n')
-        print("＊ユウちゃんパニックですぅ・・・！\n{}".format(traceback.format_exc()))
+        print("＊レイちゃんパニックですぅ・・・！\n{}".format(traceback.format_exc()))
         if config['linenotify'].getboolean('enable') == True and dbPanic == False:
             headers = {"Authorization": "Bearer " + config['linenotify']['token']}
-            payload = {"message": "\n＊ユウちゃんがパニックになりました。\nパニック時刻: \n" + nowFormat + "\n詳細はログを確認してくださいっ"}
+            payload = {"message": "\n＊レイちゃんがパニックになりました。\nパニック時刻: \n" + nowFormat + "\n詳細はログを確認してくださいっ"}
             if config['web'].getboolean('enable'):
                 payload['message'] += "\n" + config['web']['base'] + "/panic-log/" + nowFileFormat
             req = requests.post("https://notify-api.line.me/api/notify", headers=headers, params=payload)
@@ -46,7 +46,7 @@ class KotohiraUtil:
         # パニックした時にトゥートできるか試しますっ！できなくてもエラーを出さないようにしますっ！
         if dbPanic == False:
             try:
-                mastodon.toot("ユウちゃんパニックですぅ・・・！٩(ŏ﹏ŏ、)۶")
+                mastodon.toot("レイちゃんパニックですぅ・・・！٩(ŏ﹏ŏ、)۶")
             except:
                 pass
 

@@ -30,7 +30,7 @@ def local():
     try:
         mastodon.stream_local(local_listener(), timeout=20)
     except OperationalError as exc:
-        print('＊データベースにアクセスできませんっ！ユウちゃん寝ますっ！')
+        print('＊データベースにアクセスできませんっ！レイちゃん寝ますっ！')
         raise exc
     except (requests.exceptions.ReadTimeout, MastodonNetworkError, MastodonServerError):
         print('＊ローカルタイムラインが繋がんないみたいですっ・・・。１分後にやり直しますっ！')
@@ -50,7 +50,7 @@ def home():
         print('Fetched account: @{}'.format(res.acct))
         mastodon.stream_user(user_listener(), timeout=20)
     except OperationalError as exc:
-        print('＊データベースにアクセスできませんっ！ユウちゃん寝ますっ！')
+        print('＊データベースにアクセスできませんっ！レイちゃん寝ますっ！')
         raise OperationalError from exc
     except (requests.exceptions.ReadTimeout, MastodonNetworkError, MastodonServerError):
         print('＊ホームタイムラインが繋がんないみたいですっ・・・。１分後にやり直しますっ！')
