@@ -10,7 +10,7 @@ http-ece==1.1.0
 idna==2.8
 Jinja2==2.10.1
 MarkupSafe==1.1.1
-Mastodon.py==1.4.0
+Mastodon.py==1.5.0
 pycparser==2.19
 python-dateutil==2.8.0
 python-magic==0.4.15
