@@ -2,7 +2,7 @@ asn1crypto==0.24.0
 beautifulsoup4==4.7.1
 bottle==0.12.16
 certifi==2019.3.9
-cffi==1.12.2
+cffi==1.13.2
 chardet==3.0.4
 cryptography==2.6.1
 decorator==4.4.0
